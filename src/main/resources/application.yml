@@ -1,0 +1,40 @@
+server:
+  port: 8001
+spring:
+  rabbitmq:
+    inner:
+      host: 127.0.0.1
+      port: 5672
+      username: guest
+      password: guest
+      publisher-returns: true
+      virtual-host: /
+    outer:
+      host: 127.0.0.1
+      port: 5673
+      username: guest
+      password: guest
+      publisher-returns: true
+      virtual-host: /
+      listener:
+        simple:
+          # 设置消息为手动确认模式
+          acknowledge-mode: auto
+          # 设置每次获取消息条数为50
+          prefetch: 50
+          concurrency: 1
+          max-concurrency: 1
+          # 如果有批量获取，指定获取条数
+          batch-size: 3
+          # 3秒
+          receive-timeout: 3000
+# 数据制造配置
+simulation:
+  #随机压力配置
+  pressureRandom:
+    # 压力初始值
+    pressure: 20
+    # 压力比较值  if(pressure>morePressure)
+    morePressure: 22
+    # 压力改变值
+    changePressure: 10
